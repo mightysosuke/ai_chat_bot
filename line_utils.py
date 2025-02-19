@@ -1,16 +1,18 @@
-import requests
+from linebot import LineBotApi
+from linebot.models import TextSendMessage
+import os
 
-LINE_CHANNEL_ACCESS_TOKEN = "J6vmTwBpFA6ewJYyPidOZqkRcorg9prRxq9+JUp3fhLV6XBkqDqvs98zO1XGZSZyI7FaduJQRbS1s6RwyQYhJLLRCohcZZMI8Tm7PkccGEJbuXR5u1AeQLPp0pdYo6BZA6M9bv9HciEacXMX2M6WNwdB04t89/1O/w1cDnyilFU="
+# LINEのチャネルアクセストークン（環境変数から取得）
+LINE_CHANNEL_ACCESS_TOKEN = os.getenv("LINE_CHANNEL_ACCESS_TOKEN")
 
-# Helper function to send a reply via LINE Messaging API
+# LINE API クライアントのインスタンスを作成
+line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
+
 def send_line_reply(reply_token, messages):
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {LINE_CHANNEL_ACCESS_TOKEN}"
-    }
-    payload = {
-        "replyToken": reply_token,
-        "messages": messages
-    }
-    response = requests.post("https://api.line.me/v2/bot/message/reply", headers=headers, json=payload)
-    return response.status_code
+    """
+    LINEのリプライメッセージを送信する関数
+    :param reply_token: LINEのリプライトークン
+    :param messages: 送信するメッセージ（リスト形式）
+    """
+    text_messages = [TextSendMessage(text=msg["text"]) for msg in messages]
+    line_bot_api.reply_message(reply_token, text_messages)

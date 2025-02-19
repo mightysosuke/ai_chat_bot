@@ -19,7 +19,7 @@ def webhook():
 
 @app.route("/", methods=["GET"])
 def index():
-    return "LINE Bot is running. Use /webhook for LINE messages.", 200
+    return "LINE Bot is running. Use /callback for LINE messages.", 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))

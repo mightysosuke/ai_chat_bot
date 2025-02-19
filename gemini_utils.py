@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 
 # Gemini APIの設定
-genai.configure(api_key=os.getenv("AIzaSyAg1Ul-aiot4s6yaLK5ZgVxM00BZzqz4_4"))
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-2.0-flash")
 
 def get_gemini_response(character, user_message):
